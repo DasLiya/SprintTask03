@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="Twiter.css">
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <p class="insideh">Twitter</p>
+    <p><a href="#" class="insidehref" style="font-size: 15px; margin-left: 500px">Tweets</a></p>
+    <p><a href="login.html" class="insidehref" style="font-size: 15px;">Logout</a></p>
+    <p><a href="#" class="insidehref" style="font-size: 15px;">Register</a></p>
+  </div>
+</div>
+<div class="header2">
+<h1 style="text-align: center">Registration Form</h1>
+<form id="registrationForm">
+  <label for="email" style="font-size: 20px">Email:</label>
+  <br>
+  <input type="email" id="email" required style="margin-top: 15px; margin-bottom: 15px"><br>
+  <label for="password">Password:</label>
+  <br>
+  <input type="password" id="password" required style="margin-bottom: 15px; margin-top: 15px"><br>
+
+  <label for="fullName">Full Name:</label>
+  <br>
+  <input type="text" id="fullName" required style="margin-top: 10px; margin-bottom: 15px"><br>
+
+  <label for="country" style="margin-bottom: 15px">Country:</label>
+  <br>
+  <select id="country" style="margin-bottom: 15px; margin-top: 15px">
+    <option>Kazakhstan</option>
+    <option>USA</option>
+    <option>Germany</option>
+  </select>
+ <br>
+
+  <label for="birthdate">Date of Birth:</label>
+  <br>
+  <input type="date" id="birthdate" required style="margin-top: 15px; margin-bottom: 15px"><br>
+
+  <button type="button" onclick="register()" style="padding: 10px; font-size: 20px; background-color: #0056b3; color: white">Register</button>
+</form>
+
+<div id="registrationMessage" style="display: none; color: green;">
+  Registration successful! You can now log in.
+</div>
+<p>Already have an account? <a href="login.html">Log in here</a></p>
+</div>
+
+<script>
+  function register() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let fullName = document.getElementById("fullName").value;
+    let country = document.getElementById("country").value;
+    let birthdate = document.getElementById("birthdate").value;
+
+    console.log("Registered User:");
+    console.log("Email: " + email);
+    console.log("Password: " + password);
+    console.log("Full Name: " + fullName);
+    console.log("Country: " + country);
+    console.log("Date of Birth: " + birthdate);
+
+    saveUserDataToLocalStorage(email, password, fullName, country, birthdate); // Pass password to function
+    showRegistrationMessage();
+  }
+
+
+  function saveUserDataToLocalStorage(email, password, fullName, country, birthdate) {
+    var userData = {
+      email: email,
+      password: password,
+      fullName: fullName,
+      country: country,
+      birthdate: birthdate
+    };
+
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+
+  function showRegistrationMessage() {
+    let messageDiv = document.getElementById("registrationMessage");
+    messageDiv.style.display = "block";
+  }
+</script>
+</body>
+</html>

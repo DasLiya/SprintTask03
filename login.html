@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="Twiter.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <p class="insideh">Twitter</p>
+        <p><a href="#" class="insidehref" style="font-size: 15px; margin-left: 500px">Tweets</a></p>
+        <p><a href="login.html" class="insidehref" style="font-size: 15px;">Logout</a></p>
+        <p><a href="register.html" class="insidehref" style="font-size: 15px;">Register</a></p>
+    </div>
+</div>
+<div class="header3">
+<div id="loginFormContainer">
+    <h1 style="text-align: center">Login Form</h1>
+    <form id="loginForm">
+        <label for="loginEmail" style="margin-bottom: 15px; margin-top: 15px">Email:</label>
+        <input type="email" id="loginEmail" required style="margin-bottom: 15px; margin-top: 15px"><br>
+
+        <label for="loginPassword" style="margin-bottom: 15px; margin-top: 15px">Password:</label>
+        <input type="password" id="loginPassword" required style="margin-bottom: 15px; margin-top: 15px"><br>
+
+        <button type="button" onclick="login()" style="padding: 10px; font-size: 20px; background-color: #0056b3; color: white">Login</button>
+    </form>
+    <p>Don't have an account? <a href="register.html">Register here</a></p>
+</div>
+
+<div id="welcomeSection" style="display: none;">
+    <h1>Welcome, <span id="userFullName"></span>!</h1>
+    <div id="userData" style="display: none;">
+
+        <p id="userEmail"></p>
+        <p id="userCountry"></p>
+        <p id="userBirthdate"></p>
+    </div>
+</div>
+</div>
+
+<script>
+    window.onload = function() {
+        displayUserDataFromLocalStorage();
+    };
+
+    function login() {
+        let loginEmail = document.getElementById("loginEmail").value;
+        let loginPassword = document.getElementById("loginPassword").value;
+
+        let userData = localStorage.getItem("userData");
+
+        if (userData) {
+            userData = JSON.parse(userData);
+            if (loginEmail === userData.email && loginPassword === userData.password) {
+                document.getElementById("loginFormContainer").style.display = "none";
+                document.getElementById("welcomeSection").style.display = "block";
+                document.getElementById("userFullName").textContent = userData.fullName;
+
+                document.getElementById("userEmail").textContent = "Email: " + userData.email;
+                document.getElementById("userCountry").textContent = "Country: " + userData.country;
+                document.getElementById("userBirthdate").textContent = "Date of Birth: " + userData.birthdate;
+                document.getElementById("userData").style.display = "block";
+            } else {
+                showError("Incorrect email or password");
+            }
+        } else {
+            showError("No user data found");
+        }
+    }
+
+    function displayUserDataFromLocalStorage() {
+        let userData = localStorage.getItem("userData");
+
+        if (userData) {
+            userData = JSON.parse(userData);
+            document.getElementById("userFullName").textContent = userData.fullName;
+        }
+    }
+
+    function showError(message) {
+        let loginForm = document.getElementById("loginForm");
+        let errorDiv = document.createElement("div");
+        errorDiv.textContent = message;
+        errorDiv.style.color = "red";
+        loginForm.appendChild(errorDiv);
+    }
+</script>
+</body>
+</html>
